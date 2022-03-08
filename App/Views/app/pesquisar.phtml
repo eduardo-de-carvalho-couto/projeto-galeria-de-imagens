@@ -1,0 +1,60 @@
+	<body>
+		<header>
+			<a href="/timeline">Logo</a>
+			<form method="GET" action="/pesquisar" class="row d-flex flex-nowrap">
+				    <div class="col">
+				    	<input type="text" name="pesquisarPor" class="form-control pesquisa">
+				    </div>
+				    <div class="col">
+				    	<select name="tipoDePesquisa" class="form-select" aria-label="Default select example">
+						  <option selected>--Tipo de pesquisa--</option>
+						  <option value="imagens">Imagens</option>
+						  <option value="usuarios">Usuários</option>
+						</select>
+				    </div>
+				    <div class="col">
+				    	<button type="submit" class="btn btn-primary">Pesquisar</button>
+				    </div>
+			</form>
+			<nav>
+				<ul class="menu">
+					<li><a href="/seu_perfil">Seu perfil</a></li>
+					<li><a href="/sair">Sair</a></li>
+				</ul>
+			</nav>
+		</header>
+		<?php if($this->view->tipoDePesquisa != '' && $this->view->tipoDePesquisa == "usuarios") { ?>
+			<?php foreach($this->view->pesquisa as $in_pesq => $pesquisa) { ?>
+				<div class="row d-flex justify-content-center pt-2">
+					<div class="col-6">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-6">
+										<?=$pesquisa['nome']?>									
+									</div>
+
+									<div class="col-6 d-flex justify-content-end">
+										<div>
+											<a href="" class="btn btn-success">Seguir</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php } ?>
+		<?php } ?>
+
+		<div class="flex">
+			<?php if($this->view->tipoDePesquisa != '' && $this->view->tipoDePesquisa == "imagens") { ?>
+				<?php foreach($this->view->pesquisa as $in_pesq => $pesquisa) { ?>
+						<div>
+							<img src="<?=$pesquisa['path']?>">
+							<p><?=$pesquisa['legenda']?></p>
+						</div>
+				<?php } ?>
+			<?php } ?>
+		</div>
+	</body>

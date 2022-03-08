@@ -1,0 +1,23 @@
+<body class="inscrever">
+		<div class="formInscricao">
+			<h1>Bem vindo a sua Galeria de Imagens</h1>
+			<form method="POST" action="/registrar">
+				<div>
+					<input type="text" value="<?=$this->view->usuario['nome']?>" name="nome" class="inputInscricao" placeholder="Username">
+				</div>
+				<div>
+					<input type="email" value="<?=$this->view->usuario['email']?>" name="email" class="inputInscricao" placeholder="E-mail">
+				</div>
+				<div>
+					<input type="password" value="<?=$this->view->usuario['senha']?>" name="senha" class="inputInscricao" placeholder="Senha">
+				</div>
+				<div class="button">
+					<button>Inscrever-se</button>
+				</div>
+				<?php if($this->view->erroRegistro) { ?>
+					<small class="form-text text-danger">Erro ao tentar realizar o cadastro, verifique se os campos foram preenchidos corretamente.</small>
+				<?php } ?>
+			</form>
+		</div>
+	</body>
+</html>

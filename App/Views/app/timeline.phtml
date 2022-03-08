@@ -1,0 +1,37 @@
+<body>
+
+		<header>
+			<a href="/">Logo</a>
+			<form method="GET" action="/pesquisar" class="row d-flex flex-nowrap">
+				    <div class="col">
+				    	<input type="text" name="pesquisarPor" class="form-control pesquisa">
+				    </div>
+				    <div class="col">
+				    	<select name="tipoDePesquisa" class="form-select" aria-label="Default select example">
+						  <option selected>--Tipo de pesquisa--</option>
+						  <option value="imagens">Imagens</option>
+						  <option value="usuarios">Usuários</option>
+						</select>
+				    </div>
+				    <div class="col">
+				    	<button type="submit" class="btn btn-primary">Pesquisar</button>
+				    </div>
+			</form>
+			<nav>
+				<ul class="menu">
+					<li><a href="/seu_perfil">Seu perfil</a></li>
+					<li><a href="/sair">Sair</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<section class="flex"><!--Atenção ao nome dessa classe!! -->
+			<?php foreach($this->view->imagens as $in_img => $imagem) { ?>
+				<div>
+					<img src="<?=$imagem['path']?>">
+					<p><?=$imagem['legenda']?></p>
+				</div>
+			<?php } ?>
+		</section>
+
+	</body>
