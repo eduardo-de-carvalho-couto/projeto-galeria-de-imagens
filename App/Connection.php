@@ -8,9 +8,9 @@ class Connection {
 		try {
 
 			$conn = new \PDO(
-				"mysql:host=localhost;dbname=youdraught;charset=utf8",
+				"mysql:host=db;dbname=galeria;charset=utf8",
 				"root",
-				"" 
+				"password" 
 			);
 
 			return $conn;

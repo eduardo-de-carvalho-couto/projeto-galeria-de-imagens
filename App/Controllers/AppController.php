@@ -12,9 +12,9 @@ use MF\Model\Container;
 
 			$this->validaAutenticacao();
 
-			$foto = Container::getModel("Foto");
+			$imagem = Container::getModel("Imagem");
 
-			$this->view->imagens = $foto->getAll();
+			$this->view->imagens = $imagem->getAll();
 			
 			$this->render('timeline');
 		}
@@ -23,17 +23,17 @@ use MF\Model\Container;
 
 			$this->validaAutenticacao();
 
-			$foto = Container::getModel("Foto");
+			$imagem = Container::getModel("Imagem");
 
-			$foto->__set("id_usuario", $_SESSION['id']);
+			$imagem->__set("id_usuario", $_SESSION['id']);
 
-			$this->view->minhasImagens = $foto->minhasImagens();
+			$this->view->minhasImagens = $imagem->minhasImagens();
 				
 			
 			$this->render('seuperfil');
 		}
 
-		public function postarFoto(){
+		public function postarImagem(){
 
 			$this->validaAutenticacao();
 
@@ -57,19 +57,19 @@ use MF\Model\Container;
 				if($extensao != "jpg" && $extensao != "png"){
 					header("Location: /seu_perfil?erro=3");
 				}
-				//  >>../App/Fotos/<<
+				//  >>../App/imagems/<<
 				$pasta = "imagens/";
 
 				$path = $pasta . $novoNomeDoArquivo . "." . $extensao;
 				$moverArquivo = move_uploaded_file($arquivo['tmp_name'], $path);
 
 				if($moverArquivo){
-					$foto = Container::getModel('Foto');
-					$foto->__set("id_usuario", $_SESSION['id']);
-					$foto->__set("legenda", $_POST['legenda']);
-					$foto->__set("path", $path);
+					$imagem = Container::getModel('Imagem');
+					$imagem->__set("id_usuario", $_SESSION['id']);
+					$imagem->__set("legenda", $_POST['legenda']);
+					$imagem->__set("path", $path);
 
-					$foto->salvar();
+					$imagem->salvar();
 
 					header("Location: /seu_perfil?envio=sucesso");
 				}
@@ -87,7 +87,7 @@ use MF\Model\Container;
 
 			if($pesquisarPor != '' && $tipoDePesquisa == "usuarios"){
 				
-				echo "Pesquisando algum usuario";
+				//echo "Pesquisando algum usuario";
 
 
 				$usuario = Container::getModel('Usuario');
@@ -98,13 +98,13 @@ use MF\Model\Container;
 
 			}else if($pesquisarPor != '' && $tipoDePesquisa == "imagens"){
 				
-				echo "Pesquisando alguma imagem";
+				//echo "Pesquisando alguma imagem";
 
-				$foto = Container::getModel("Foto");
-				$foto->__set("legenda", $pesquisarPor);
-				$foto->__set("id_usuario", $_SESSION['id']);
+				$imagem = Container::getModel("Imagem");
+				$imagem->__set("legenda", $pesquisarPor);
+				$imagem->__set("id_usuario", $_SESSION['id']);
 
-				$pesquisa = $foto->pesquisarImagens();
+				$pesquisa = $imagem->pesquisarImagens();
 
 			}else{
 				header("Location: /timeline");
@@ -112,8 +112,32 @@ use MF\Model\Container;
 
 			$this->view->pesquisa = $pesquisa;
 			$this->view->tipoDePesquisa = $tipoDePesquisa;
+			$this->view->pesquisarPor = $pesquisarPor;
 
 			$this->render('pesquisar');
+
+			
+		}
+
+		public function acao(){
+
+			$this->validaAutenticacao();
+
+			$acao = isset($_GET['acao']) ? $_GET['acao'] : '';
+			$id_usuario_seguindo = isset($_GET['id_usuario']) ? $_GET['id_usuario'] : '';
+			$nome_do_usuario = isset($_GET['nome']) ? $_GET['nome'] : '';
+
+			$usuario = Container::getModel('Usuario');
+			$usuario->__set('id', $_SESSION['id']);
+
+			if($acao == 'curtir') {
+				$usuario->curtirUsuario($id_usuario_seguindo);
+			} else if($acao = 'deixar_de_curtir') {
+				$usuario->deixarCurtirUsuario($id_usuario_seguindo);
+			}
+
+			header("Location: /pesquisar?pesquisarPor=$nome_do_usuario&tipoDePesquisa=usuarios");
+
 		}
 
 		public function validaAutenticacao(){

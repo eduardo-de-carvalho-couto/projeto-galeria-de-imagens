@@ -50,16 +50,22 @@ class Route extends Bootstrap {
 			'action' => 'seuPerfil'
 		);
 
-		$routes['postar_foto'] = array(
-			'route' => '/postar_foto',
+		$routes['postar_imagem'] = array(
+			'route' => '/postar_imagem',
 			'controller' => 'AppController',
-			'action' => 'postarFoto'
+			'action' => 'postarImagem'
 		);
 
 		$routes['pesquisar'] = array(
 			'route' => '/pesquisar',
 			'controller' => 'AppController',
 			'action' => 'pesquisar'
+		);
+
+		$routes['acao'] = array(
+			'route' => '/acao',
+			'controller' => 'AppController',
+			'action' => 'acao'
 		);
 
 		$this->setRoutes($routes);

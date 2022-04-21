@@ -88,11 +88,21 @@ namespace App\Models;
 		public function getAll(){
 			$query = "
 					select
-						id, nome, email
+						u.id, 
+						u.nome, 
+						u.email,
+						(
+							select
+								count(*)
+							from
+								curtidas as c
+							where
+								c.id_usuario = :id_usuario and c.id_usuario_curtindo = u.id
+						) as curtindo_sn
 					from
-						usuarios
+						usuarios as u
 					where
-						nome like :nome AND id != :id_usuario
+						u.nome like :nome AND u.id != :id_usuario
 			";
 			$stmt = $this->db->prepare($query);
 			$stmt->bindValue(":nome", "%".$this->__get("nome")."%");
@@ -100,6 +110,26 @@ namespace App\Models;
 			$stmt->execute();
 
 			return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		}
+
+		public function curtirUsuario($id_usuario_seguindo){
+			$query = "insert into curtidas(id_usuario, id_usuario_curtindo) values(:id_usuario, :id_usuario_curtindo)";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(':id_usuario', $this->__get('id'));
+			$stmt->bindValue(':id_usuario_curtindo', $id_usuario_seguindo);
+			$stmt->execute();
+
+			return true;
+		}
+
+		public function deixarCurtirUsuario($id_usuario_seguindo){
+			$query = "delete from curtidas where id_usuario = :id_usuario and id_usuario_curtindo = :id_usuario_curtindo";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(':id_usuario', $this->__get('id'));
+			$stmt->bindValue(':id_usuario_curtindo', $id_usuario_seguindo);
+			$stmt->execute();
+
+			return true;
 		}
 	}
 ?>

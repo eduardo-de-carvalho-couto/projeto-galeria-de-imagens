@@ -1,24 +1,23 @@
 	<body>
 		<header>
-			<a href="/timeline">Logo</a>
+			<a href="/timeline"><i class="fa-solid fa-camera-retro display-4"></i></a>
 			<form method="GET" action="/pesquisar" class="row d-flex flex-nowrap">
-				    <div class="col">
-				    	<input type="text" name="pesquisarPor" class="form-control pesquisa">
+				    <div class="col-7">
+				    	<input type="text" name="pesquisarPor" class="form-control">
 				    </div>
-				    <div class="col">
-				    	<select name="tipoDePesquisa" class="form-select" aria-label="Default select example">
-						  <option selected>--Tipo de pesquisa--</option>
+				    <div class="col-4">
+				    	<select name="tipoDePesquisa" class="form-select" >
 						  <option value="imagens">Imagens</option>
 						  <option value="usuarios">Usuários</option>
 						</select>
 				    </div>
-				    <div class="col">
-				    	<button type="submit" class="btn btn-primary">Pesquisar</button>
+				    <div class="col-1">
+				    	<button type="submit" class="btn btn-outline-light rounded-circle p-2"><i class="fa-solid fa-magnifying-glass"></i></button>
 				    </div>
 			</form>
 			<nav>
 				<ul class="menu">
-					<li><a href="/seu_perfil">Seu perfil</a></li>
+					<li><a href="/seu_perfil"><i class="fa-solid fa-user"></i></li>
 					<li><a href="/sair">Sair</a></li>
 				</ul>
 			</nav>
@@ -31,12 +30,17 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col-6">
-										<?=$pesquisa['nome']?>									
+										<?=$pesquisa['nome']?>
 									</div>
 
 									<div class="col-6 d-flex justify-content-end">
 										<div>
-											<a href="" class="btn btn-success">Seguir</a>
+											<?php if ($pesquisa['curtindo_sn'] == 0) { ?>
+												<a href="/acao?acao=curtir&id_usuario=<?=$pesquisa['id']?>&nome=<?=$this->view->pesquisarPor?>" class="btn btn-success">Curtir</a>
+											<?php } ?>
+											<?php if ($pesquisa['curtindo_sn'] == 1) { ?>
+												<a href="/acao?acao=deixar_de_curtir&id_usuario=<?=$pesquisa['id']?>&nome=<?=$this->view->pesquisarPor?>" class="btn btn-danger">Deixar de curtir</a>
+											<?php } ?>
 										</div>
 									</div>
 								</div>

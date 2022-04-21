@@ -1,19 +1,18 @@
 <body>
 
 		<header>
-			<a href="/timeline">Logo</a>
+			<a href="/timeline"><i class="fa-solid fa-camera-retro display-4"></i></a>
 			<form method="GET" action="/pesquisar" class="row d-flex flex-nowrap">
-				    <div class="col">
-				    	<input type="text" name="pesquisarPor" class="form-control pesquisa">
+				    <div class="col-7">
+				    	<input type="text" name="pesquisarPor" class="form-control">
 				    </div>
-				    <div class="col">
-				    	<select name="tipoDePesquisa" class="form-select" aria-label="Default select example">
-						  <option selected>--Tipo de pesquisa--</option>
+				    <div class="col-4">
+				    	<select name="tipoDePesquisa" class="form-select">
 						  <option value="imagens">Imagens</option>
 						  <option value="usuarios">Usuários</option>
 						</select>
 				    </div>
-				    <div class="col">
+				    <div class="col-1">
 				    	<button type="submit" class="btn btn-outline-light rounded-circle p-2"><i class="fa-solid fa-magnifying-glass"></i></button>
 				    </div>
 			</form>
@@ -29,7 +28,7 @@
 			<div class="row">
 				<div class="col">	
 					<div>
-						<form method="POST" action="/postar_foto" enctype="multipart/form-data">
+						<form method="POST" action="/postar_imagem" enctype="multipart/form-data">
 							<div>
 								<input type="file" name="arquivo">
 							</div>

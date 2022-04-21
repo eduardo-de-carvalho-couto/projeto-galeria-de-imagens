@@ -4,7 +4,7 @@ namespace App\Models;
 
 	use MF\Model\Model;
 
-	class Foto extends Model {
+	class Imagem extends Model {
 
 		private $id;
 		private $id_usuario;
@@ -21,7 +21,7 @@ namespace App\Models;
 
 		//salvar
 		public function salvar(){
-			$query = "insert into fotos(id_usuario, legenda, path) values(:id_usuario, :legenda, :path)";
+			$query = "insert into imagens(id_usuario, legenda, path) values(:id_usuario, :legenda, :path)";
 			$stmt = $this->db->prepare($query);
 			$stmt->bindValue(":id_usuario", $this->__get("id_usuario"));
 			$stmt->bindValue(":legenda", $this->__get("legenda"));
@@ -36,7 +36,7 @@ namespace App\Models;
 					select 
 						id, id_usuario, legenda, path, DATE_FORMAT(data_registro, '%d%m%Y %H:%i') as data
 					from
-						fotos
+						imagens
 					order by
 						data desc
 					";
@@ -51,7 +51,7 @@ namespace App\Models;
 					select 
 						id, id_usuario, legenda, path, DATE_FORMAT(data_registro, '%d%m%Y %H:%i') as data
 					from
-						fotos
+						imagens
 					where
 						id_usuario = :id_usuario
 					order by
@@ -69,7 +69,7 @@ namespace App\Models;
 					select 
 						id, id_usuario, legenda, path, DATE_FORMAT(data_registro, '%d%m%Y %H:%i') as data
 					from
-						fotos
+						imagens
 					where
 						legenda like :legenda and id_usuario != :id_usuario
 					order by

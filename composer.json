@@ -1,5 +1,5 @@
 {
-	"name": "miniframework",
+	"name": "miniframework/miniframework",
 	"require": {
 		"php": ">= 7.0"
 	},
